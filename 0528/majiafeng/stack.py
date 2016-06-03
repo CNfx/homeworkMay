@@ -1,10 +1,11 @@
 import array
+import itertools
 
 class Stack:
     data = None
     
     def __init__(self, n):
-        self.data = array.array('l', [0 for i in range(n + 1)])
+        self.data = array.array('l', list(itertools.repeat(0, n+1)))
         self.data[0] = n
 
     def __str__(self):
@@ -30,8 +31,7 @@ class Stack:
 
         return v
 
-
-if __name__ == "__main__":
+def test():
     st = Stack(3)
     print st.Push(1), st
     print st.Push(2), st
@@ -43,4 +43,21 @@ if __name__ == "__main__":
     print st.Pop(), st
     print st.Pop(), st
 
+def test2(n):
+    stack = []
+    for i in range(2*n):
+        stack.append(i)
+
+def test3(n):
+    st = Stack(n)
+    for i in range(n):
+        st.Push(i)
+
+
+if __name__ == "__main__":
+    #test()
+    import timeit
+
+    print timeit.timeit("test2(10000000)", setup="from __main__ import test2, test3", number=1)
+    print timeit.timeit("test3(10000000)", setup="from __main__ import test2, test3", number=1)
 
