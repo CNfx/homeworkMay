@@ -160,8 +160,30 @@ func (l *LinkList) Delete(i int) error {
 	return nil
 }
 
+//Pool这里没太想明白,使用栈实现了一下思路
 type Pool struct {
-	data []int
+	data Stack
+}
+
+func NewPool(cap int) *Pool {
+	s := NewStack(cap)
+	for i := 0; i < cap; i++ {
+		s.Push(1)
+	}
+	return &Pool{*s}
+}
+
+func (p *Pool) Pop() int {
+	v, err := p.data.Pop()
+	if err != nil {
+		return 0
+	}
+
+	return v
+}
+
+func (p *Pool) Push(v int) error {
+	return p.data.Push(v)
 }
 
 func main() {
